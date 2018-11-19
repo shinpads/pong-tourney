@@ -19,6 +19,10 @@ html, body {
   margin-top: 0;
 }
 
+.standings-table {
+  width: fit-content;
+}
+
 .results-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;

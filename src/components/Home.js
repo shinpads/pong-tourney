@@ -10,6 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 
 // Custom Components
 import GameCard from './GameCard';
+import StandingsTable from './StandingsTable';
 
 // other
 import api from '../api';
@@ -66,6 +67,7 @@ class Home extends Component {
           l: 0,
           gw: 0,
           gl: 0,
+          pm: 0,
         };
       }
       if (!stats[lName]) {
@@ -76,14 +78,29 @@ class Home extends Component {
           l: 0,
           gw: 0,
           gl: 0,
+          pm: 0,
         };
       }
 
       stats[wName].gp++;
       stats[lName].gp++;
+
+      stats[wName].w++;
+      stats[lName].l++;
+
+      stats[wName].gw += 2;
+      stats[lName].gw += g1w !== g2w ? 1 : 0;
+
+      stats[wName].gl += g1w !== g2w ? 1 : 0;
+      stats[lName].gl += 2;
+
+      stats[wName].pm += plusMinus;
+      stats[lName].pm -= plusMinus;
+
     }
     results.reverse();
     this.setState({results});
+    this.setState({stats});
     console.log(stats);
   }
 
@@ -91,17 +108,9 @@ class Home extends Component {
     return (
       <div className="home-page" >
         <div style={{ width: '100%', height: '10px'}}/>
-        <Paper className="standings">
-          <TableHead>
-            <TableCell numeric>Rank</TableCell>
-            <TableCell>Name</TableCell>
-            <TableCell>GP</TableCell>
-            <TableCell>W</TableCell>
-            <TableCell>L</TableCell>
-            <TableCell>gw</TableCell>
-            <TableCell>gl</TableCell>
-          </TableHead>
-        </Paper>
+        <div className="standings-table">
+          <StandingsTable stats={this.state.stats}/>
+        </div>
         <div className="results-grid">
           {this.state.results.map((result) => {
             return (
