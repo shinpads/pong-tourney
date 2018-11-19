@@ -101,8 +101,23 @@ class Home extends Component {
     results.reverse();
     this.setState({results});
 
-    const statsList = Object.keys(stats).map(name => stats[name]);
-    console.log(statsList);
+    let statsList = Object.keys(stats).map(name => stats[name]);
+    statsList.sort((a, b) => {
+      if (a.w !== b.w) return b.w - a.w;
+      if (a.gw !== b.gw) return b.gw - a.gw;
+      if (a.gl !== b.gl) return a.gl - b.gl;
+      if (a.pm !== b.pm) return b.pm - a.pm;
+      if (a.l !== b.l) return a.l - b.l;
+      if (a.mp !== b.mp) return a.mp - b.mp;
+      return -1;
+    });
+
+    statsList = statsList.map((stat, index) => {
+      stat.rank = index + 1;
+      console.log(stat);
+      return stat;
+    });
+
     this.setState({stats: statsList});
   }
 
@@ -116,7 +131,7 @@ class Home extends Component {
         <div className="results-grid">
           {this.state.results.map((result) => {
             return (
-              <GameCard result={result}/>
+              <GameCard key={result.players.join()} result={result}/>
             );
           })}
         </div>

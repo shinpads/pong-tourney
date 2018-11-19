@@ -49,7 +49,7 @@ const StandingsTable = ({
         {stats.map((stat) => {
           return (
             <TableRow key={stat.name}>
-              <TableCell numeric>0</TableCell>
+              <TableCell numeric>{stat.rank}</TableCell>
               <TableCell>{stat.name}</TableCell>
               <TableCell numeric>{stat.gp}</TableCell>
               <TableCell numeric>{stat.w}</TableCell>
