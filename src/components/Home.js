@@ -24,7 +24,7 @@ class Home extends Component {
     super(props);
     this.state = {
       results: [],
-      stats: {},
+      stats: [],
     }
   }
   async componentDidMount () {
@@ -100,8 +100,10 @@ class Home extends Component {
     }
     results.reverse();
     this.setState({results});
-    this.setState({stats});
-    console.log(stats);
+
+    const statsList = Object.keys(stats).map(name => stats[name]);
+    console.log(statsList);
+    this.setState({stats: statsList});
   }
 
   render() {

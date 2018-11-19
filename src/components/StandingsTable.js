@@ -46,8 +46,7 @@ const StandingsTable = ({
         </TableRow>
       </TableHead>
       <TableBody>
-        {Object.keys(stats).map((name) => {
-          const stat = stats[name];
+        {stats.map((stat) => {
           return (
             <TableRow key={stat.name}>
               <TableCell numeric>0</TableCell>
