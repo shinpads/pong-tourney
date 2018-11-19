@@ -1,11 +1,20 @@
 import React, { Component } from 'react';
+
+// Material Design
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+
+// Custom Components
+import GameCard from './GameCard';
+
+// other
 import api from '../api';
+import colors from '../colors';
+
 
 const tableWidth = 5;
 
@@ -14,12 +23,13 @@ class Home extends Component {
     super(props);
     this.state = {
       results: [],
+      stats: {},
     }
   }
   async componentDidMount () {
     const data = await api.getData();
-    console.log(data);
     const results = [];
+    const stats = {};
     for (let i = 0; i < data.length; i += tableWidth) {
       if (!data[i].value) break;
       const players = [data[i].value, data[i+1].value];
@@ -29,7 +39,9 @@ class Home extends Component {
       const g1w = game1[0] > game1[1] ? 0 : 1;
       const g2w = game2[0] > game2[1] ? 0 : 1;
       const g3w = game3[0] > game3[1] ? 0 : 1;
-      const winner = (g1 + g2 === 2) ? 1 : (g1 + g2 === 0) ? 0 : (g1 + g2 + g3 === 2) ? 1 : 0;
+      const isG3 = game3[0] === game3[1];
+      const winner = (g1w + g2w === 2) ? 1 : (g1w + g2w === 0) ? 0 : (g1w + g2w + g3w === 2) ? 1 : 0;
+      const plusMinus = Math.abs((game1[0] - game1[1]) + (game2[0] - game2[1]) + (game3[0] - game3[1]));
       results.push({
         players,
         game1,
@@ -38,11 +50,41 @@ class Home extends Component {
         g1w,
         g2w,
         g3w,
+        isG3,
         winner,
+        plusMinus
       });
+
+      const wName = players[winner];
+      const lName = players[1 - winner];
+
+      if (!stats[wName]) {
+        stats[wName] = {
+          name: wName,
+          gp: 0,
+          w: 0,
+          l: 0,
+          gw: 0,
+          gl: 0,
+        };
+      }
+      if (!stats[lName]) {
+        stats[lName] = {
+          name: lName,
+          gp: 0,
+          w: 0,
+          l: 0,
+          gw: 0,
+          gl: 0,
+        };
+      }
+
+      stats[wName].gp++;
+      stats[lName].gp++;
     }
     results.reverse();
     this.setState({results});
+    console.log(stats);
   }
 
   render() {
@@ -63,9 +105,7 @@ class Home extends Component {
         <div className="results-grid">
           {this.state.results.map((result) => {
             return (
-              <Paper className="result-card">
-                {result.players[0] + ' - ' + result.players[1]}
-              </Paper>
+              <GameCard result={result}/>
             );
           })}
         </div>
