@@ -124,6 +124,15 @@ class Home extends Component {
   render() {
     return (
       <div className="home-page" >
+        <div style={{
+            width: '100%',
+            margin: 'auto',
+            textAlign: 'center',
+          }}>
+          <h1>
+            Welcome to   D O Z R   Pong Tourny
+          </h1>
+        </div>
         <div style={{ width: '100%', height: '10px'}}/>
         <div className="standings-table">
           <StandingsTable stats={this.state.stats}/>
