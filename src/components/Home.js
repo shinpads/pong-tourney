@@ -129,8 +129,13 @@ class Home extends Component {
             margin: 'auto',
             textAlign: 'center',
           }}>
-          <h1>
-            Welcome to   D O Z R   Pong Tourny
+          <h1 style={{
+              fontFamily: "'Anton', sans-serif",
+              letterSpacing: '3px',
+              fontSize: '64px',
+              color: '#acb20c',
+            }}>
+            DOZR Pong Tourny.net
           </h1>
         </div>
         <div style={{ width: '100%', height: '10px'}}/>
