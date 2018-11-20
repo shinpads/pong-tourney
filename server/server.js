@@ -21,7 +21,7 @@ const html = path.join(__dirname, 'index.html');
 
 app.use(express.static(__dirname));
 app.use('/static', express.static(__dirname));
-
+app.enable('trust proxy');
 
 app.get('/data', async (req, res) => {
   log('GET /data');
@@ -37,7 +37,7 @@ app.get('/data', async (req, res) => {
 });
 
 app.get('*', (req, res) => {
-  log('GET *');
+  log('GET *', req.ip, req.headers.host);
   res.sendFile(html);
 });
 
