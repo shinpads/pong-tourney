@@ -125,6 +125,9 @@ class Home extends Component {
     for (let i = 0; i < schedule.length; i += gamesPerDay + 1) {
         let date = schedule[i].value;
         if (!date) break;
+				let date2 = new Date(date);
+				date2.setDate(date2.getDate() + 1);
+				if (date2.getTime() < Date.now()) continue;
         for (let ii = i + 1; ii <= i + gamesPerDay; ii++) {
           if (schedule[ii].value) {
             upcomingGames.push({
