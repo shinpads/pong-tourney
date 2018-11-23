@@ -3,6 +3,7 @@ html, body {
   width: 100%;
   height: 100%;
 	background-color: #4e4e4e;
+  font-family: Roboto, sans-sans-serif;
 }
 #root {
   width: 100%;

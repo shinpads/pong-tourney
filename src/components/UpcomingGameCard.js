@@ -7,10 +7,12 @@ const UpcomingGameCard = ({
   date,
   players,
 }) => {
+  const date2 = new Date(date);
+  date2.setDate(date2.getDate() + 1);
   return (
     <Paper className="upcoming-game-card">
       <div style={{ width: '100%', textAlign: 'right', fontWeight: '500' }}>
-        {(new Date(date)).toDateString()}
+        {date2.toDateString()}
       </div>
       <div style={{ width: '100%', textAlign: 'center' }}>
         {players.map((player) => {

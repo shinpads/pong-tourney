@@ -149,10 +149,12 @@ class Home extends Component {
             textAlign: 'center',
           }}>
           <h1 style={{
-              fontFamily: "'Anton', sans-serif",
+              fontFamily: "'Roboto', sans-serif",
               letterSpacing: '3px',
               fontSize: '64px',
-              color: '#cacf46',
+              color: '#e3d02c',
+              marginTop: '1rem',
+              marginBottom: '1rem',
             }}>
             DOZR Pong
           </h1>
