@@ -11,6 +11,9 @@ import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
 import { createStyles } from '@material-ui/core/styles';
 
+// custom components
+import Player from './Player';
+
 const columns = [
   {id: 'rank', numeric: true, label: 'Rank', tooltip: 'Rank'},
   {id: 'name', numeric: false, label: 'Name', tooltip: 'Name'},
@@ -54,7 +57,7 @@ const StandingsTable = ({
             return (
               <TableRow key={stat.name}>
                 <TableCell className="standings-table-cell" numeric>{stat.rank}</TableCell>
-                <TableCell className="standings-table-cell">{stat.name}</TableCell>
+                <TableCell className="standings-table-cell"><Player name={stat.name}/></TableCell>
                 <TableCell className="standings-table-cell" numeric>{stat.gp}</TableCell>
                 <TableCell className="standings-table-cell" numeric>{stat.w}</TableCell>
                 <TableCell className="standings-table-cell" numeric>{stat.l}</TableCell>

@@ -28,6 +28,7 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
   width: 100%;
+  grid-auto-rows: max-content;
 }
 
 .results-flex {
@@ -38,6 +39,8 @@ html, body {
 .result-card {
   margin: 10px;
   padding: 10px;
+  display: flex;
+  justify-content: start;
 }
 
 .upcoming-game-card {

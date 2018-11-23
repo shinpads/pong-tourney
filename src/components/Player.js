@@ -8,7 +8,8 @@ const Player = ({
   return (
     <div
       style={{
-        display: 'flex'
+        display: 'flex',
+        alignItems: 'center',
       }}
     >
       <PersonIcon />
