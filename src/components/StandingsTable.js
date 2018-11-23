@@ -9,6 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
+import { createStyles } from '@material-ui/core/styles';
 
 const columns = [
   {id: 'rank', numeric: true, label: 'Rank', tooltip: 'Rank'},
@@ -20,47 +21,51 @@ const columns = [
   {id: 'gl', numeric: true, label: 'GL', tooltip: 'Game Loses'},
   {id: 'pm', numeric: true, label: '+/-', tooltip: 'Point Differntial'},
 ];
+
 const StandingsTable = ({
   stats,
 }) => {
   return (
     <Paper className="standings">
-      <TableHead>
-        <TableRow>
-          {columns.map((col) => {
-            return (
-              <TableCell
-                key={col.id}
-                numeric={col.numeric}
-              >
-                <Tooltip
-                  title={col.tooltip}
-                  placement='bottom-end'
-                  enterDelay={300}
+      <Table>
+        <TableHead>
+          <TableRow>
+            {columns.map((col) => {
+              return (
+                <TableCell
+                  key={col.id}
+                  numeric={col.numeric}
+                  className="standings-table-cell"
                 >
-                  <div>{col.label}</div>
-                </Tooltip>
-              </TableCell>
+                  <Tooltip
+                    title={col.tooltip}
+                    placement='bottom-end'
+                    enterDelay={300}
+                  >
+                    <div>{col.label}</div>
+                  </Tooltip>
+                </TableCell>
+              );
+            })}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {stats.map((stat) => {
+            return (
+              <TableRow key={stat.name}>
+                <TableCell className="standings-table-cell" numeric>{stat.rank}</TableCell>
+                <TableCell className="standings-table-cell">{stat.name}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.gp}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.w}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.l}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.gw}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.gl}</TableCell>
+                <TableCell className="standings-table-cell" numeric>{stat.pm}</TableCell>
+              </TableRow>
             );
-          })}
-        </TableRow>
-      </TableHead>
-      <TableBody>
-        {stats.map((stat) => {
-          return (
-            <TableRow key={stat.name}>
-              <TableCell numeric>{stat.rank}</TableCell>
-              <TableCell>{stat.name}</TableCell>
-              <TableCell numeric>{stat.gp}</TableCell>
-              <TableCell numeric>{stat.w}</TableCell>
-              <TableCell numeric>{stat.l}</TableCell>
-              <TableCell numeric>{stat.gw}</TableCell>
-              <TableCell numeric>{stat.gl}</TableCell>
-              <TableCell numeric>{stat.pm}</TableCell>
-            </TableRow>
-          );
-      })}
-      </TableBody>
+        })}
+        </TableBody>
+      </Table>
     </Paper>
   );
 };

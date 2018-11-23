@@ -25,6 +25,9 @@ app.enable('trust proxy');
 
 app.get('/data', async (req, res) => {
   log('GET /data');
+  let standings;
+  let schedule;
+
   sheet.getCells({
     'min-row': 3,
     'max-row': 150,
@@ -32,8 +35,22 @@ app.get('/data', async (req, res) => {
     'max-col': 6,
     'return-empty': true,
   }, (err, cells) => {
-    res.send(cells);
+    standings = cells;
+    sheet.getCells({
+      'min-row': 2,
+      'max-row': 20,
+      'min-col': 8,
+      'max-col': 13,
+      'return-empty': true,
+    }, (err, cells2) => {
+      schedule = cells2;
+      res.send({
+        standings,
+        schedule,
+      });
+    });
   });
+
 });
 
 app.get('*', (req, res) => {

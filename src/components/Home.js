@@ -11,6 +11,7 @@ import TableRow from '@material-ui/core/TableRow';
 // Custom Components
 import GameCard from './GameCard';
 import StandingsTable from './StandingsTable';
+import UpcomingGameCard from './UpcomingGameCard';
 
 // other
 import api from '../api';
@@ -25,18 +26,19 @@ class Home extends Component {
     this.state = {
       results: [],
       stats: [],
+      upcomingGames: [],
     }
   }
   async componentDidMount () {
-    const data = await api.getData();
+    const { standings, schedule } = await api.getData();
     const results = [];
     const stats = {};
-    for (let i = 0; i < data.length; i += tableWidth) {
-      if (!data[i].value) break;
-      const players = [data[i].value, data[i+1].value];
-      const game1 = data[i+2].value ? data[i+2].value.split('-').map(val => parseInt(val)) : [0, 0];
-      const game2 = data[i+3].value ? data[i+3].value.split('-').map(val => parseInt(val)) : [0, 0];
-      const game3 = data[i+4].value ? data[i+4].value.split('-').map(val => parseInt(val)) : [0, 0];
+    for (let i = 0; i < standings.length; i += tableWidth) {
+      if (!standings[i].value) break;
+      const players = [standings[i].value, standings[i+1].value];
+      const game1 = standings[i+2].value ? standings[i+2].value.split('-').map(val => parseInt(val)) : [0, 0];
+      const game2 = standings[i+3].value ? standings[i+3].value.split('-').map(val => parseInt(val)) : [0, 0];
+      const game3 = standings[i+4].value ? standings[i+4].value.split('-').map(val => parseInt(val)) : [0, 0];
       const g1w = game1[0] > game1[1] ? 0 : 1;
       const g2w = game2[0] > game2[1] ? 0 : 1;
       const g3w = game3[0] > game3[1] ? 0 : 1;
@@ -114,11 +116,28 @@ class Home extends Component {
 
     statsList = statsList.map((stat, index) => {
       stat.rank = index + 1;
-      console.log(stat);
       return stat;
     });
 
-    this.setState({stats: statsList});
+    const gamesPerDay = 5;
+    const upcomingGames = [];
+
+    for (let i = 0; i < schedule.length; i += gamesPerDay + 1) {
+        let date = schedule[i].value;
+        if (!date) break;
+        for (let ii = i + 1; ii <= i + gamesPerDay; ii++) {
+          if (schedule[ii].value) {
+            upcomingGames.push({
+              date,
+              players: schedule[ii].value.split(','),
+            });
+          }
+        }
+    }
+
+    console.log('upcomingGames', upcomingGames);
+
+    this.setState({stats: statsList, upcomingGames: upcomingGames});
   }
 
   render() {
@@ -133,21 +152,32 @@ class Home extends Component {
               fontFamily: "'Anton', sans-serif",
               letterSpacing: '3px',
               fontSize: '64px',
-              color: '#acb20c',
+              color: '#cacf46',
             }}>
-            DOZR Pong Tourny.net
+            DOZR Pong
           </h1>
         </div>
         <div style={{ width: '100%', height: '10px'}}/>
-        <div className="standings-table">
           <StandingsTable stats={this.state.stats}/>
-        </div>
-        <div className="results-grid">
-          {this.state.results.map((result) => {
-            return (
-              <GameCard key={result.players.join()} result={result}/>
-            );
-          })}
+        <div className="results-flex">
+          <div className='results-grid'>
+            {this.state.results.map((result) => {
+              return (
+                <GameCard key={result.players.join()} result={result}/>
+              );
+            })}
+          </div>
+          <div className='results-grid'>
+            {this.state.upcomingGames.map((game) => {
+              return (
+                <UpcomingGameCard
+                  key={game.players.join(game.date)}
+                  date={game.date}
+                  players={game.players}
+                />
+              );
+            })}
+          </div>
         </div>
       </div>
     );
