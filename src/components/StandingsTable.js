@@ -33,8 +33,7 @@ const styles = theme => ({
     },
   },
   cell: {
-    textAlign: 'center',
-    padding: '8px',
+    padding: window.isMobile ? '8px' : '4px 56px 4px 24px',
   }
 });
 
