@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 import Fade from 'react-reveal/Fade';
 import Flip from 'react-reveal/Flip';
+import $ from 'jquery';
 
 // Material Design
 import Paper from '@material-ui/core/Paper';
@@ -15,6 +16,7 @@ import TableRow from '@material-ui/core/TableRow';
 import GameCard from './GameCard';
 import StandingsTable from './StandingsTable';
 import UpcomingGameCard from './UpcomingGameCard';
+import Spinner from './Spinner';
 
 // other
 import api from '../api';
@@ -31,9 +33,19 @@ class Home extends Component {
       stats: [],
       upcomingGames: [],
       playerPictures: {},
+      loading: true,
+      isMobile: false,
     }
   }
   async componentDidMount () {
+    const isMobile = window.innerWidth < 800;
+    window.isMobile = isMobile;
+    this.setState({ isMobile });
+    $(window).resize(() => {
+      const isMobile = window.innerWidth < 800;
+      window.isMobile = isMobile;
+      this.setState({ isMobile });
+    })
     const { standings, schedule, playerPictures } = await api.getData();
     const results = [];
     const stats = {};
@@ -136,7 +148,7 @@ class Home extends Component {
           if (schedule[ii].value) {
             upcomingGames.push({
               date,
-              players: schedule[ii].value.split(','),
+              players: schedule[ii].value.split(',').map(p => p.trim()),
             });
           }
         }
@@ -144,7 +156,7 @@ class Home extends Component {
     console.log('pics', playerPictures);
     const playerPictureMap = {};
     for (let i = 0; i < playerPictures.length; i += 2) {
-      let playerName = playerPictures[i].value;
+      let playerName = playerPictures[i].value.trim();
       if (!playerName) break;
       let playerPicture = playerPictures[i+1].value;
       if (playerPicture) {
@@ -152,10 +164,15 @@ class Home extends Component {
       }
     }
     window.playerPictures = playerPictureMap;
-    this.setState({stats: statsList, upcomingGames, playerPictures: playerPictureMap});
+    this.setState({stats: statsList, upcomingGames, playerPictures: playerPictureMap, loading: false});
   }
-
   render() {
+    if (this.state.loading) {
+      return (
+        <Spinner />
+      )
+    }
+    const resultClasses = 'results-grid ' + (this.state.isMobile ? 'grid-1-col' : 'grid-2-col');
     return (
       <div className="home-page" >
         <div style={{
@@ -177,7 +194,7 @@ class Home extends Component {
         <div style={{ width: '100%', height: '10px'}}/>
           <Fade><StandingsTable stats={this.state.stats}/></Fade>
         <div className="results-flex">
-          <div className='results-grid'>
+          <div className={resultClasses}>
             {this.state.results.map((result) => {
               return (
                 <Flip bottom duration={500} delay={200}>
@@ -186,7 +203,7 @@ class Home extends Component {
               );
             })}
           </div>
-          <div className='results-grid'>
+          <div className={resultClasses}>
             {this.state.upcomingGames.map((game) => {
               return (
                 <Flip bottom duration={500}>

@@ -9,7 +9,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 import Tooltip from '@material-ui/core/Tooltip';
-import { createStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 
 // custom components
 import Player from './Player';
@@ -25,8 +25,22 @@ const columns = [
   {id: 'pm', numeric: true, label: '+/-', tooltip: 'Point Differntial'},
 ];
 
+
+const styles = theme => ({
+  row: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.background.default,
+    },
+  },
+  cell: {
+    textAlign: 'center',
+    padding: '8px',
+  }
+});
+
 const StandingsTable = ({
   stats,
+  classes,
 }) => {
   return (
     <Paper className="standings">
@@ -38,7 +52,7 @@ const StandingsTable = ({
                 <TableCell
                   key={col.id}
                   numeric={col.numeric}
-                  className="standings-table-cell"
+                  className={classes.cell}
                 >
                   <Tooltip
                     title={col.tooltip}
@@ -55,15 +69,15 @@ const StandingsTable = ({
         <TableBody>
           {stats.map((stat) => {
             return (
-              <TableRow key={stat.name}>
-                <TableCell className="standings-table-cell" numeric>{stat.rank}</TableCell>
-                <TableCell className="standings-table-cell"><Player name={stat.name}/></TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.gp}</TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.w}</TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.l}</TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.gw}</TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.gl}</TableCell>
-                <TableCell className="standings-table-cell" numeric>{stat.pm}</TableCell>
+              <TableRow className={classes.row} key={stat.name}>
+                <TableCell className={classes.cell} numeric>{stat.rank}</TableCell>
+                <TableCell className={classes.cell}><Player name={stat.name}/></TableCell>
+                <TableCell className={classes.cell} numeric>{stat.gp}</TableCell>
+                <TableCell className={classes.cell} numeric>{stat.w}</TableCell>
+                <TableCell className={classes.cell} numeric>{stat.l}</TableCell>
+                <TableCell className={classes.cell} numeric>{stat.gw}</TableCell>
+                <TableCell className={classes.cell} numeric>{stat.gl}</TableCell>
+                <TableCell className={classes.cell} numeric>{stat.pm}</TableCell>
               </TableRow>
             );
         })}
@@ -73,4 +87,4 @@ const StandingsTable = ({
   );
 };
 
-export default StandingsTable;
+export default withStyles(styles)(StandingsTable);

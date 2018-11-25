@@ -14,10 +14,10 @@ const UpcomingGameCard = ({
       <div style={{ width: '100%', textAlign: 'right', fontWeight: '500' }}>
         {date2.toDateString()}
       </div>
-      <div style={{ width: '100%', textAlign: 'center' }}>
-        {players.map((player) => {
-          return (<Player name={player}/>);
-        })}
+      <div style={{ width: '100%', textAlign: 'center', display: 'flex', justifyContent: 'space-evenly', marginTop: '1rem', marginBottom: '1rem' }}>
+        <Player name={players[0]}/>
+        <div> - </div>
+        <Player name={players[1]}/>
       </div>
     </Paper>
   );

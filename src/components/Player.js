@@ -10,6 +10,7 @@ const Player = ({
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
     <div style={{
