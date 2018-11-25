@@ -12,7 +12,8 @@ const GameCard = ({
         <div
           style={{
             fontWeight: result.winner === 0 ? 600 : 400,
-            color: result.winner === 0 ? colors.winner : colors.loser
+            color: result.winner === 0 ? colors.winner : colors.loser,
+            marginBottom: '0.5rem',
           }}
         >
           <Player name={result.players[0]} />

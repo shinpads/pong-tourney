@@ -27,7 +27,7 @@ app.get('/data', async (req, res) => {
   log('GET /data');
   let standings;
   let schedule;
-
+  let playerPictures;
   sheet.getCells({
     'min-row': 3,
     'max-row': 150,
@@ -44,9 +44,19 @@ app.get('/data', async (req, res) => {
       'return-empty': true,
     }, (err, cells2) => {
       schedule = cells2;
-      res.send({
-        standings,
-        schedule,
+      sheet.getCells({
+        'min-row': 2,
+        'max-row': 20,
+        'min-col': 16,
+        'max-col': 17,
+        'return-empty': true,
+      }, (err, cells3) => {
+        playerPictures = cells3;
+        res.send({
+          standings,
+          schedule,
+          playerPictures,
+        });
       });
     });
   });

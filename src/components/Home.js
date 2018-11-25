@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+import Fade from 'react-reveal/Fade';
+import Flip from 'react-reveal/Flip';
+
 // Material Design
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -27,10 +30,11 @@ class Home extends Component {
       results: [],
       stats: [],
       upcomingGames: [],
+      playerPictures: {},
     }
   }
   async componentDidMount () {
-    const { standings, schedule } = await api.getData();
+    const { standings, schedule, playerPictures } = await api.getData();
     const results = [];
     const stats = {};
     for (let i = 0; i < standings.length; i += tableWidth) {
@@ -137,10 +141,18 @@ class Home extends Component {
           }
         }
     }
-
-    console.log('upcomingGames', upcomingGames);
-
-    this.setState({stats: statsList, upcomingGames: upcomingGames});
+    console.log('pics', playerPictures);
+    const playerPictureMap = {};
+    for (let i = 0; i < playerPictures.length; i += 2) {
+      let playerName = playerPictures[i].value;
+      if (!playerName) break;
+      let playerPicture = playerPictures[i+1].value;
+      if (playerPicture) {
+        playerPictureMap[playerName] = playerPicture;
+      }
+    }
+    window.playerPictures = playerPictureMap;
+    this.setState({stats: statsList, upcomingGames, playerPictures: playerPictureMap});
   }
 
   render() {
@@ -163,23 +175,27 @@ class Home extends Component {
           </h1>
         </div>
         <div style={{ width: '100%', height: '10px'}}/>
-          <StandingsTable stats={this.state.stats}/>
+          <Fade><StandingsTable stats={this.state.stats}/></Fade>
         <div className="results-flex">
           <div className='results-grid'>
             {this.state.results.map((result) => {
               return (
-                <GameCard key={result.players.join()} result={result}/>
+                <Flip bottom duration={500} delay={200}>
+                  <GameCard key={result.players.join()} result={result}/>
+                </Flip>
               );
             })}
           </div>
           <div className='results-grid'>
             {this.state.upcomingGames.map((game) => {
               return (
-                <UpcomingGameCard
-                  key={game.players.join(game.date)}
-                  date={game.date}
-                  players={game.players}
-                />
+                <Flip bottom duration={500}>
+                  <UpcomingGameCard
+                    key={game.players.join(game.date)}
+                    date={game.date}
+                    players={game.players}
+                  />
+                </Flip>
               );
             })}
           </div>
