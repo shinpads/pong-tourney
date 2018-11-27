@@ -21,6 +21,7 @@ const html = path.join(__dirname, 'index.html');
 
 app.use(express.static(__dirname));
 app.use('/static', express.static(__dirname));
+app.use('*/js',express.static(__dirname));
 app.enable('trust proxy');
 
 app.get('/data', async (req, res) => {
