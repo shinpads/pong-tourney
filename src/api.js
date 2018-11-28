@@ -1,6 +1,9 @@
 const axios = require('axios');
 const api = {
-  getData: async () => {
+  getData: async (forceNew=false) => {
+    if (window.dataResult && !forceNew) {
+      return window.dataResult;
+    }
     const res = await axios.get('/data');
 
     const tableWidth = 5;
@@ -18,7 +21,7 @@ const api = {
       const g3w = game3[0] > game3[1] ? 0 : 1;
       const isG3 = game3[0] === game3[1];
       const winner = (g1w + g2w === 2) ? 1 : (g1w + g2w === 0) ? 0 : (g1w + g2w + g3w === 2) ? 1 : 0;
-      const plusMinus = Math.abs((game1[0] - game1[1]) + (game2[0] - game2[1]) + (game3[0] - game3[1]));
+      const plusMinus = (game1[winner] - game1[1 - winner]) + (game2[winner] - game2[1 - winner]) + (game3[winner] - game3[1 - winner]);
       results.push({
         players,
         game1,
@@ -120,12 +123,14 @@ const api = {
       }
     }
     window.playerPictures = playerPictureMap;
-    return {
+    const dataResult = {
       statsList,
       upcomingGames,
       playerPictureMap,
       results,
     };
+    window.dataResult = dataResult;
+    return dataResult;
   }
 };
 

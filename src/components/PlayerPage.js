@@ -40,16 +40,20 @@ class PlayerPage extends Component {
     }
     return (
       <div>
-      <Line
-        data={{
-          labels: this.state.labels,
-          datasets: [{
-              label: '+/-',
-              data: this.state.plusMinusData,
-              borderWidth: 1
-          }]
-        }}
-      />
+      <div style={{
+        backgroundColor: '#FFF',
+      }}>
+        <Line
+          data={{
+            labels: this.state.labels,
+            datasets: [{
+                label: '+/-',
+                data: this.state.plusMinusData,
+                borderWidth: 1
+            }]
+          }}
+        />
+      </div>
         {this.props.match.params.playerName}
       </div>
     )

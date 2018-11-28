@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-	background-color: #4e4e4e;
+	background-color: #7e93ff;
   font-family: Roboto, sans-sans-serif;
 }
 #root {
@@ -19,7 +19,6 @@ html, body {
   grid-template-columns: 1fr 1fr;
 }
 .home-page {
-  background-color: #4e4e4e;
   width: 100%;
   height: 100%;
 }
