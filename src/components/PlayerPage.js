@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
+
+import Paper from '@material-ui/core/Paper';
+
 import api from '../api';
 import Spinner from './Spinner';
 import { Line } from 'react-chartjs-2';
+import Title from './Title';
+import personIcon from '../../public/person.png'
 
 class PlayerPage extends Component {
   constructor(props) {
@@ -10,7 +15,9 @@ class PlayerPage extends Component {
       loading: true,
       plusMinusData: [],
       labels: [],
+      stats: {},
     }
+    this.playerName = this.props.match.params.playerName;
   }
 
   async componentDidMount() {
@@ -28,7 +35,9 @@ class PlayerPage extends Component {
       else plusMinusData.push(last - game.plusMinus);
     });
     console.log(playerGames);
-    await this.setState({ plusMinusData, labels });
+    const stats = statsList[statsList.findIndex((stat) => stat.name === playerName)];
+    console.log(stats);
+    await this.setState({ plusMinusData, labels, stats });
     this.setState({ loading: false });
   }
 
@@ -38,8 +47,30 @@ class PlayerPage extends Component {
         <Spinner />
       )
     }
+    const stats = this.state.stats;
     return (
-      <div>
+      <div style={{ padding: '5px' }}>
+      <Paper style={{ marginBottom: '1rem'}}>
+        <div style={{ padding: '10px', display: 'flex' }}>
+          <img width={150} height={150} src={window.playerPictures[this.playerName] || personIcon} style={{ borderRadius: '150px', marginLeft: '1rem', marginRight: '2rem' }}/>
+          <div style={{ paddingTop: '1rem', paddingBottom: '1rem', marginRight: '2rem' }}>
+            {this.playerName}
+          </div>
+          <div style={{ paddingTop: '1rem', paddingBottom: '1rem', marginRight: '2rem' }}>
+            <div>Rank: {stats.rank}</div>
+          </div>
+          <div style={{ paddingTop: '1rem', paddingBottom: '1rem', marginRight: '2rem' }}>
+            <div>Matches Played: {stats.gp}</div>
+            <div>Matches Won: {stats.w}</div>
+            <div>Matches Lost: {stats.l}</div>
+          </div>
+          <div style={{ paddingTop: '1rem', paddingBottom: '1rem', marginRight: '2rem' }}>
+            <div>+/-: {stats.pm}</div>
+            <div>Games Won: {stats.gw}</div>
+            <div>Games Lost: {stats.gl}</div>
+          </div>
+        </div>
+      </Paper>
       <div style={{
         backgroundColor: '#FFF',
       }}>
@@ -51,6 +82,17 @@ class PlayerPage extends Component {
                 data: this.state.plusMinusData,
                 borderWidth: 1
             }]
+          }}
+          options={{
+            scales: {
+              yAxes: [{
+                display: true,
+                ticks: {
+                  suggestedMin: -20,
+                  suggestedMax: 20,
+                }
+              }]
+            }
           }}
         />
       </div>
