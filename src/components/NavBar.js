@@ -4,6 +4,7 @@ import pongIcon from '../../public/pong.png';
 //<img style={{ width: '64px', position: 'relative', left: '-65px', bottom: '1px' }} src={pongIcon} alt=""/>
 const NavBar = ({
   loginClicked,
+  registerClicked,
 }) => {
   return (
     <div className="nav-bar">
@@ -24,6 +25,9 @@ const NavBar = ({
         alignItems: 'center',
         marginRight: '1rem',
       }}>
+        <Button style={{ marginRight: '1rem' }} variant="contained" color="secondary" onClick={registerClicked}>
+          Register
+        </Button>
         <Button variant="contained" color="primary" onClick={loginClicked}>
           Login
         </Button>

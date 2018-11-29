@@ -15,7 +15,6 @@ const gssDoc = new GoogleSpreadsheet('12i_sptiBNC4ESZ2h_yDX6e1s1q2Ufq49zc8RpSw5O
 let sheet;
 gssDoc.getInfo((err, info) => {
   if (err) log('err loading sheets', err);
-  else log('loaded sheet');
   sheet = info.worksheets[0];
 });
 

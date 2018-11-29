@@ -138,9 +138,16 @@ const api = {
       password,
     };
     const result = await axios.post('/dashboard/user/login', body);
-    return result.user;
-  }
-
+    return result.data.success;
+  },
+  register: async (username, password) => {
+    const body = {
+      username,
+      password,
+    };
+    const result = await axios.post('/dashboard/user/register', body);
+    return result.data.success;
+  },
 };
 
 export default api;

@@ -32,7 +32,7 @@ const database = {
   set: (collection, value, query) => {
 
   },
-  add: async (collection, value) => {
+  add: (collection, value) => {
     db[collection].push(value);
     return value;
   },

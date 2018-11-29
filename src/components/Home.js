@@ -103,15 +103,66 @@ class Home extends Component {
               />
               <Button
                 color="primary"
-                onClick={() => {
-                  api.checkLogin(this.state.username, this.state.password);
+                onClick={async () => {
+                  const result = await api.checkLogin(this.state.username, this.state.password);
+                  console.log('logged in:', result);
                 }}
               >
                 Login
               </Button>
             </Paper>
         </Modal>
-        <NavBar loginClicked={() => this.setState({ loginModalOpen: true })}/>
+        <Modal
+          open={this.state.registerModalOpen}
+          onClose={() => this.setState({ registerModalOpen: false })}
+        >
+            <Paper style={{
+              width: 'fit-content',
+              height: 'fit-content',
+              padding: '1rem',
+              position: 'absolute',
+              top: '50%',
+              left: '50%',
+              transform: 'translate(calc(-50% - 1rem), calc(-50% - 1rem))',
+              display: 'flex',
+              flexDirection: 'column',
+            }}>
+              <div>Register</div>
+              <TextField
+                style={{
+                  marginBottom: '1rem'
+                }}
+                value={this.state.username}
+                onChange={(e) => {
+                  this.setState({ username: e.currentTarget.value })
+                }}
+                label="username"
+              />
+              <TextField
+                style={{
+                  marginBottom: '1rem'
+                }}
+                value={this.state.password}
+                onChange={(e) => {
+                  this.setState({ password: e.currentTarget.value })
+                }}
+                label="password"
+                type="password"
+              />
+              <Button
+                color="primary"
+                onClick={() => {
+                  api.register(this.state.username, this.state.password);
+                }}
+              >
+                Register
+              </Button>
+            </Paper>
+        </Modal>
+        <NavBar
+          loginClicked={() => this.setState({ loginModalOpen: true })}
+          registerClicked={() => this.setState({ registerModalOpen: true })}
+        />
         <div className="home-page" >
           <div style={{ width: '100%', height: '10px'}}/>
             <Fade><StandingsTable stats={this.state.stats}/></Fade>
