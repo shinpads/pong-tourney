@@ -21,6 +21,7 @@ html, body {
 .home-page {
   width: 100%;
   height: 100%;
+  overflow: scroll;
 }
 
 .standings {
@@ -98,4 +99,22 @@ html, body {
     transform: scale(1.0);
     -webkit-transform: scale(1.0);
   }
+}
+
+
+.nav-bar {
+  z-index: 20;
+  width: 100%;
+  height: 45px;
+  background-color: white;
+  display: grid;
+  grid-template-columns: 75% 25%;
+  box-shadow: 2px 2px 13px 2px #333333;
+  position: relative;
+}
+
+.page-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }

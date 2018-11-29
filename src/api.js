@@ -131,7 +131,16 @@ const api = {
     };
     window.dataResult = dataResult;
     return dataResult;
+  },
+  checkLogin: async (username, password) => {
+    const body = {
+      username,
+      password,
+    };
+    const result = await axios.post('/dashboard/user/login', body);
+    return result.user;
   }
+
 };
 
 export default api;

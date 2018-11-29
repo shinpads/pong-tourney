@@ -1,9 +1,13 @@
 require('babel-polyfill');
+require('dotenv').config({ path: '.env.production' });
 const debug = require('debug');
 const express = require('express');
 const bodyParser = require('body-parser');
 const path = require('path');
+const session = require('express-session');
+const database = require('./database');
 const GoogleSpreadsheet = require('google-spreadsheet');
+const dbRouter = require('./dbRouter');
 
 const log = debug('pong:sever');
 
@@ -15,14 +19,30 @@ gssDoc.getInfo((err, info) => {
   sheet = info.worksheets[0];
 });
 
+log(process.env.NODE_ENV);
 
 const app = express();
 const html = path.join(__dirname, 'index.html');
 
 app.use(express.static(__dirname));
+app.use(bodyParser.json());
 app.use('/static', express.static(__dirname));
 app.use('*/js',express.static(__dirname));
-app.enable('trust proxy');
+app.enable('trust proxy', 1);
+app.use(session({
+  secret: process.env.SESSION_SECRET_KEY,
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true },
+}));
+
+app.get('*', (req, res, next) => {
+  const now = new Date();
+  log('connection', req.ip, `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+  next();
+});
+
+app.use('/dashboard', dbRouter);
 
 app.get('/data', async (req, res) => {
   log('GET /data');
@@ -62,11 +82,6 @@ app.get('/data', async (req, res) => {
     });
   });
 
-});
-
-app.get('*', (req, res) => {
-  log('GET *', req.ip, req.headers.host);
-  res.sendFile(html);
 });
 
 app.listen(5000, () => {
