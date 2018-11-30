@@ -10,6 +10,7 @@ html, body {
   height: 100%;
   font-family: Roboto;
 }
+/*This grid is wacko buddy */
 .grid-1-col {
   display: grid;
   grid-template-columns: 1fr;
