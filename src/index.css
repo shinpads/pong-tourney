@@ -19,6 +19,59 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
+
+/* The real grid */
+.containerGrid {
+  width: 100%;
+  margin: auto;
+  display: grid;
+  opacity: 1;
+  grid-template-columns: repeat(12, 1fr);
+}
+
+
+.gridHeader {
+  grid-column: span 12;
+  justify-self: center;
+  align-self: end;
+  height: auto;
+}
+
+.gridItemHead {
+  grid-column: span 4;
+  justify-self: center;
+  align-self: start;
+  font-weight: 700;
+  text-align: center;
+}
+
+.gridItemContent {
+  width: 80%;
+  margin: auto;
+  margin-top: 8px;
+  grid-column: span 4;
+  justify-self: start;
+  align-self: start;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+    .gridItemHead {
+      grid-column: span 12;
+      margin-top: 48px !important;
+    }
+
+    .gridItemContent {
+      grid-column: span 12;
+      margin-top: 32px;
+    }
+
+    .hideOnMobile {
+      display: none;
+    }
+
+}
+
 .home-page {
   width: 100%;
   height: 100%;
