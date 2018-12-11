@@ -24,7 +24,7 @@ const Title = ({}) => {
           textShadow: '1px 1px 2px black',
         }}>
         <Fade left>
-          DOZR Pong
+          2018 DOZR PONG TOURNEY
         </Fade>
         <Fade right>
           <div style={{
