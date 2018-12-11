@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import pongIcon from '../../public/pong.png';
+import dozrIcon from '../../public/dozr_logo.svg';
 //<img style={{ width: '64px', position: 'relative', left: '-65px', bottom: '1px' }} src={pongIcon} alt=""/>
 const NavBar = ({
   loginClicked,
@@ -17,7 +18,8 @@ const NavBar = ({
           display: 'flex',
           marginLeft: '1rem',
         }}>
-        DOZR Pong
+        <img src={dozrIcon} style={{ marginRight: '1rem' }} />
+         Pong
       </div>
       <div style={{
         display: 'flex',
