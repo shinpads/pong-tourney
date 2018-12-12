@@ -24,7 +24,7 @@
     "react-scripts": "2.1.1"
   },
   "scripts": {
-    "start": "NODE_ENV=production npm run build:dev && NODE_ENV=production DEBUG=pong:* node ./dist/server.js",
+    "start": "NODE_ENV=production DEBUG=pong:* node ./dist/server.js",
     "build": "webpack --mode production --config webpack.config.js",
     "build:dev": "webpack --mode development --config webpack.server.config.js & webpack --mode development --config webpack.dev.config.js",
     "test": "react-scripts test",

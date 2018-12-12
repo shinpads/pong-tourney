@@ -1,7 +1,9 @@
-FROM node:8
-WORKDIR /usr/src/app
-COPY package*.json ./
+FROM node:9.2
+
+RUN mkdir -p /usr/src/pong-tourney
+WORKDIR /usr/src/pong-tourney
+COPY ./pong-tourney/ ./
+
 RUN npm install
-COPY . .
-EXPOSE 5000
-CMD ["npm", "run", "start"]
+RUN npm run build:dev
+CMD ["npm", "start"]
