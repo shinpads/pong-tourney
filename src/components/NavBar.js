@@ -2,41 +2,69 @@ import React, { Component } from 'react';
 import Button from '@material-ui/core/Button';
 import pongIcon from '../../public/pong.png';
 import dozrIcon from '../../public/dozr_logo.svg';
-//<img style={{ width: '64px', position: 'relative', left: '-65px', bottom: '1px' }} src={pongIcon} alt=""/>
+import { withStyles, createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+
+
+const materialTheme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: '#000000',
+    },
+    secondary: {
+      main: '#A7915F',
+    },
+  },
+});
+
+const styles = {
+  root: {
+    flexGrow: 1,
+  },
+  grow: {
+    flexGrow: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  padded: {
+    padding: '12px 6px',
+  }
+};
 
 const NavBar = ({
   loginClicked,
   registerClicked,
+  classes,
 }) => {
+
+
   return (
-    <div className="nav-bar">
-      <div style={{
-          fontFamily: "'Roboto', sans-serif",
-          fontWeight: '500',
-          fontSize: '40px',
-          color: '#ac9456',
-          backgroundColor: '#000000',
-          display: 'flex',
-          marginLeft: '0.7rem',
-        }}>
-        <img src={dozrIcon} style={{ marginRight: '0.7rem' }} />
-         PONG
+    <MuiThemeProvider theme={materialTheme}>
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.padded}>
+          <Toolbar>
+            <Typography variant="h4" color="secondary" className={classes.grow}>
+              <img src={dozrIcon} style={{ marginRight: '0.7rem' }} />
+               PONG
+            </Typography>
+            <Button color='secondary' onClick={loginClicked}>Login</Button>
+            <Button color='secondary' onClick={registerClicked}>Register</Button>
+          </Toolbar>
+        </AppBar>
       </div>
-      <div style={{
-        display: 'flex',
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        marginRight: '1rem',
-      }}>
-        <Button className="small-text-mobile" style={{ marginRight: '1rem', backgroundColor: '#ac9456', padding: '0px 12 px' }} variant="contained" onClick={registerClicked}>
-          Register
-        </Button>
-        <Button className="small-text-mobile" style={{ backgroundColor: '#ac9456', padding: '0px 12px' }} variant="contained" color="#ac9456" onClick={loginClicked}>
-          Login
-        </Button>
-      </div>
-    </div>
+    </MuiThemeProvider>
+
   )
 }
 
-export default NavBar;
+NavBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(NavBar);

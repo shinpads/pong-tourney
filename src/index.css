@@ -2,7 +2,7 @@ html, body {
   margin: 0;
   width: 100%;
   height: 100%;
-	background-color: #1b1b1b;
+    background-color: #1b1b1b;
   font-family: Roboto, sans-sans-serif;
 }
 #root {
@@ -10,7 +10,6 @@ html, body {
   height: 100%;
   font-family: Roboto;
 }
-
 .grid-1-col {
   display: grid;
   grid-template-columns: 1fr;
@@ -19,7 +18,6 @@ html, body {
   display: grid;
   grid-template-columns: 1fr 1fr;
 }
-
 /* The real grid */
 .containerGrid {
   width: 100%;
@@ -28,15 +26,12 @@ html, body {
   opacity: 1;
   grid-template-columns: repeat(12, 1fr);
 }
-
-
 .gridHeader {
   grid-column: span 12;
   justify-self: center;
   align-self: end;
   height: auto;
 }
-
 .gridItemHead {
   grid-column: span 4;
   justify-self: center;
@@ -44,7 +39,6 @@ html, body {
   font-weight: 700;
   text-align: center;
 }
-
 .gridItemContent {
   width: 80%;
   margin: auto;
@@ -54,73 +48,58 @@ html, body {
   align-self: start;
   text-align: center;
 }
-
 @media screen and (max-width: 1024px) {
     .gridItemHead {
       grid-column: span 12;
       margin-top: 48px !important;
     }
-
     .gridItemContent {
       grid-column: span 12;
       margin-top: 32px;
     }
-
     .hideOnMobile {
       display: none;
     }
-
 }
-
 .home-page {
   width: 100%;
   height: 100%;
   overflow: scroll;
 }
-
 .standings {
   margin: 10px;
   margin-top: 0;
 }
-
 .standings-table {
   width: 100%
 }
-
 .results-grid {
   width: 100%;
   grid-auto-rows: max-content;
 }
-
 .results-flex {
   display: flex;
   justify-content: space-evenly;
 }
-
 .result-card {
   margin: 10px;
   padding: 10px;
   display: flex;
   justify-content: start;
 }
-
 .upcoming-game-card {
   margin: 10px;
   padding: 10px;
 }
-
 .standings-table-cell {
   text-align: center;
 }
-
 .spinner {
   width: 40px;
   height: 40px;
-
   position: relative;
   margin: 100px auto;
 }
-
 .double-bounce1, .double-bounce2 {
   width: 100%;
   height: 100%;
@@ -130,21 +109,17 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-
   -webkit-animation: sk-bounce 2.0s infinite ease-in-out;
   animation: sk-bounce 2.0s infinite ease-in-out;
 }
-
 .double-bounce2 {
   -webkit-animation-delay: -1.0s;
   animation-delay: -1.0s;
 }
-
 @-webkit-keyframes sk-bounce {
   0%, 100% { -webkit-transform: scale(0.0) }
   50% { -webkit-transform: scale(1.0) }
 }
-
 @keyframes sk-bounce {
   0%, 100% {
     transform: scale(0.0);
@@ -154,8 +129,6 @@ html, body {
     -webkit-transform: scale(1.0);
   }
 }
-
-
 .nav-bar {
   z-index: 20;
   width: 100%;
@@ -167,15 +140,13 @@ html, body {
   position: relative;
   padding: 12px 0px;
 }
-
 .page-container {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-
 @media screen and (max-width: 800) {
   .small-text-mobile: {
-    font-size: 0.3rem !important;
+    font-size: 12px !important;
   }
 }
